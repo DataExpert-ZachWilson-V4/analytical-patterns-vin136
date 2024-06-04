@@ -76,6 +76,7 @@ jobs:
   check_files:
     name: 'Check files changed'
     runs-on: ubuntu-latest
+    needs: validate_pr_env
     if: needs.validate_pr_env.outputs.correct_env == 'true'
     outputs:
       all_changed_submission_files: ${{ steps.filtered-changed-files.outputs.all_changed_submission_files }}
