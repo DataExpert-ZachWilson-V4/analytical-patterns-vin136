@@ -63,7 +63,7 @@ def main():
   submissions = get_submissions(submission_dir)
   
   if not submissions:
-    warn_message = f"Tests skipped. Submissions not found in {submission_dir}."
+    warn_message = f"Tests skipped. No files found in `{submission_dir}` folder."
     return False, warn_message
   
   initialized, results = init_trino()
