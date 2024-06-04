@@ -1,7 +1,7 @@
 import os
 import requests
 import boto3
-from util import get_logger, get_api_key, check_aws_creds, get_git_creds, get_assignment, get_submission_dir, get_changed_files, get_runtime_env
+from util import get_logger, get_api_key, check_aws_creds, get_git_creds, get_assignment, get_submission_dir, get_submissions, get_changed_files, get_runtime_env
 from openai import OpenAI
 
 logger = get_logger()
@@ -20,23 +20,6 @@ Here is the student's submission (please note the SQL syntax should be Trino SQL
 {submission}
 ```
 """
-
-
-## Get the student's answers from the `submission` folder
-def get_submissions(submission_dir: str) -> dict:
-  submissions = {}
-  submission_files = [f for f in os.listdir(submission_dir)]
-  for filename in submission_files:
-    file_path = os.path.join(submission_dir, filename)
-    with open(file_path, "r") as file:
-      file_content = file.read()
-    if re.search(r'\S', file_content):
-      submissions[filename] = file_content
-  if not submissions:
-    logging.warning('no submissions found')
-    return None
-  sorted_submissions = dict(sorted(submissions.items()))
-  return sorted_submissions
 
 
 def download_from_s3(s3_bucket: str, s3_path: str, local_path: str):
