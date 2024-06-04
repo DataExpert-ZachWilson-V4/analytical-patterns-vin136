@@ -59,10 +59,12 @@ def run_tests(filename, submission):
     return passed, comment
   return passed, results
 
-def main(submissions: dict):
+def main():
+  submissions = get_submissions(submission_dir)
+  
   if not submissions:
-    logger.info('WARNING: No submissions found')
-    return None
+    warn_message = f"Tests skipped. Submissions not found in {submission_dir}."
+    return False, warn_message
   
   initialized, results = init_trino()
   if not initialized:
@@ -84,6 +86,5 @@ def main(submissions: dict):
     return True, "All tests passed successfully"
 
 if __name__ == "__main__":
-  submissions = get_submissions(submission_dir)
-  passed, comment = main(submissions)
+  passed, comment = main()
   print(comment)
